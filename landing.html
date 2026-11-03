@@ -1,0 +1,630 @@
+<!DOCTYPE html>
+<html lang="en" class="web">
+<head>
+    <meta charset="UTF-8">
+    <title>Creative Portfolio</title>
+    <!-- CSS is kept here inside the <head> -->
+    <style>
+        html, body {
+            margin: 0;
+            height: 100%;
+        }
+
+        .web {
+            background-color: rgb(133, 127, 127);
+            font-family: system-ui, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .header-shape {
+            width: 1300px;
+            max-width: 100%;
+            height: 100px;
+            background-color: #000;
+            border-width: 12px;
+            border-style: solid;
+            border-color: #080707;
+            font-family: IMPACT, sans-serif;
+            font-size: 36px;
+            color: #fff;
+            text-align: center;
+            line-height: 54px;
+            box-sizing: border-box;
+            position: relative;
+        }
+
+        .head-bar {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .header-text {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            padding-top: 4px;
+            font-size: clamp(1.3rem, 2vw, 2.2rem);
+            white-space: nowrap;
+        }
+
+        .logo {
+            width: 110px;
+            height: auto;
+            object-fit: cover;
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .layout-wrapper {
+            display: flex;
+            width: 100%;
+            min-height: calc(100vh - 100px);
+            align-items: stretch;
+        }
+
+        .sidebar {
+            width: 240px;
+            flex-shrink: 0;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            box-sizing: border-box;
+            transition: width 0.25s ease;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.45) transparent;
+            position: relative;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.35);
+            border-radius: 999px;
+        }
+
+        .sidebar.collapsed {
+            width: 74px;
+        }
+
+        .sb-name {
+            font-family: Arial, sans-serif;
+            font-size: 24px;
+            font-weight: bold;
+            color: #f2f4f5;
+            display: block;
+            margin-bottom: 10px;
+            padding-left: 43px;
+            padding-top: 10px;
+            transition: opacity 0.2s ease;
+        }
+
+        .sb-name-block {
+            font-family: 'arial', Helvetica, sans-serif;
+            font-size: 24px;
+            color: #fcfafa;
+            text-align: left;
+            line-height: 30px;
+            background-color: rgb(7, 5, 5);
+            border-color: rgb(245, 241, 241);
+            border-style: solid;
+            border-width: 1.5px;
+            font-weight: bold;
+            padding: 5px;
+        }
+
+        .sidebar-toggle {
+            width: 100%;
+            background: none;
+            color: #fff;
+            border: 0;
+            font-size: 22px;
+            cursor: pointer;
+            padding: 8px 0;
+            margin-bottom: 6px;
+        }
+
+        .project-tab {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            font-family: 'arial', Helvetica, sans-serif;
+            font-size: clamp(1rem, 1.8vw, 1.5rem);
+            color: #fcfafa;
+            text-align: left;
+            line-height: 30px;
+            background-color: rgb(133, 127, 127);
+            border-color: rgb(245, 241, 241);
+            border-style: solid;
+            border-width: 1.5px;
+            font-weight: bold;
+            padding: 8px 10px;
+            cursor: pointer;
+            transition: background 0.2s ease, box-shadow 0.2s ease, padding 0.2s ease;
+        }
+
+        .project-tab span {
+            transition: opacity 0.2s ease, width 0.2s ease;
+            white-space: nowrap;
+        }
+
+        .sidebar.collapsed .sb-name,
+        .sidebar.collapsed .project-tab span,
+        .sidebar.collapsed .sb-name-block {
+            opacity: 0;
+            width: 0;
+            overflow: hidden;
+            pointer-events: none;
+        }
+
+        .sidebar.collapsed .project-tab {
+            justify-content: center;
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        .sidebar.collapsed .project-tab .logo-tab {
+            margin-left: 0;
+        }
+
+        @media (max-width: 980px) {
+            .header-shape {
+                width: 100%;
+                height: auto;
+                min-height: 100px;
+            }
+
+            .head-bar {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-wrap: wrap;
+                gap: 12px;
+                min-height: 100px;
+                padding: 12px 10px;
+                box-sizing: border-box;
+            }
+
+            .header-text {
+                position: static;
+                transform: none;
+                left: auto;
+                top: auto;
+                display: block;
+                text-align: center;
+                width: 100%;
+                order: 2;
+            }
+
+            .logo {
+                position: static;
+                transform: none;
+                right: auto;
+                top: auto;
+                order: 3;
+                width: 70px;
+            }
+
+            .CTA1 {
+                position: static;
+                transform: none;
+                left: auto;
+                top: auto;
+                order: 1;
+                margin-right: auto;
+            }
+
+            .search-bar {
+                position: static;
+                transform: none;
+                right: auto;
+                top: auto;
+                margin-right: 0;
+                order: 4;
+            }
+
+            .layout-wrapper {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                max-height: 260px;
+            }
+
+            .sidebar.collapsed {
+                width: 100%;
+                max-height: 74px;
+            }
+
+            .main-content {
+                height: auto;
+                min-height: 300px;
+            }
+        }
+
+        @media (max-width: 560px) {
+            .header-shape {
+                font-size: 24px;
+                line-height: 1.4;
+            }
+
+            .header-text {
+                font-size: clamp(0.95rem, 4vw, 1.5rem);
+                white-space: normal;
+            }
+
+            .CTA1 {
+                padding: 8px 14px;
+            }
+
+            .logo {
+                width: 52px;
+            }
+
+            .main-content {
+                padding: 16px 14px;
+            }
+
+            .sb-name {
+                font-size: 20px;
+            }
+
+            .project-tab {
+                font-size: 1rem;
+            }
+        }
+
+        .project-tab.active,
+        .project-tab:hover {
+            background-color: #0059ff;
+            color: rgb(245, 242, 242);
+            box-shadow: 2px 2px 2px black;
+        }
+
+        .logo-tab {
+            width: 40px;
+            height: auto;
+            object-fit: cover;
+            margin-left: 10px;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            height: calc(100vh - 100px);
+            overflow-y: auto;
+            padding: 20px 28px;
+            box-sizing: border-box;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(0,0,0,0.35) transparent;
+        }
+
+        .main-content::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .main-content::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .main-content::-webkit-scrollbar-thumb {
+            background: rgba(0,0,0,0.35);
+            border-radius: 999px;
+        }
+
+        .main-content h1 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem);
+            color: #e4e1e1;
+            text-align: center;
+            line-height: 1.2;
+            margin-bottom: 20px;
+        }
+
+        .main-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            display: block;
+            margin: 20px auto;
+        }
+
+        .project-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 18px;
+            margin-top: 28px;
+        }
+
+        .project-gallery-card {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+        }
+
+        .project-gallery-card img {
+            display: block;
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+        }
+
+        .emsamo-text {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: clamp(1.2rem, 2vw, 1.8rem);
+            color: #000;
+            text-align: left;
+            line-height: 1.5;
+        }
+
+        .project-list {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: clamp(1rem, 1.8vw, 1.4rem);
+            color: #111;
+            line-height: 1.8;
+            margin-top: 20px;
+            padding-left: 28px;
+        }
+
+        .CTA1 {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            display: inline-block;
+            padding: 10px 20px;
+            background-color: #b4b4b4;
+            color: #fff;
+            border-radius: 6px;
+            text-decoration: none;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            z-index: 2;
+            font-size: clamp(0.72rem, 1vw, 0.9rem);
+        }
+
+        .CTA1 a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        .search-bar {
+            position: absolute;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            padding: 0.5rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            margin-right: 200px;
+            font-size: clamp(0.75rem, 1vw, 1rem);
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header-shape">
+       
+<div class="head-bar">
+    <button class="CTA1">
+        <a href="mailto:thorisommekwa68@gmail.com" target="_blank">
+            HIRE ME
+        </a>
+    </button>
+    <img src="icons/file.svg" alt="Artwork" class="logo">
+    <span class="header-text">DESIGN BY THORISO</span>
+    </div>     
+    </header>
+    
+
+    
+
+    <div class="layout-wrapper">
+        <aside class="sidebar" id="project-sidebar">
+            <button class="sidebar-toggle" type="button" id="sidebar-toggle" aria-label="Toggle sidebar">☰</button>
+
+            <div class="sb-name-block">
+                <span class="sb-name">Projects</span>
+            </div>
+
+            <button class="project-tab active" type="button" data-tab="emsamo">
+                <span>emsamo</span>
+                <img src="icons/logo-lv2-svgrepo-com.svg" alt="emsamo logo" class="logo-tab">
+            </button>
+
+            <button class="project-tab" type="button" data-tab="safe-haven">
+                <span>safe haven</span>
+                <img src="icons/logo-protools-svgrepo-com.svg" alt="safe haven logo" class="logo-tab">
+            </button>
+
+            <button class="project-tab" type="button" data-tab="fall-off">
+                <span>fall off</span>
+                <img src="icons/logo-rackext-svgrepo-com.svg" alt="fall off logo" class="logo-tab">
+            </button>
+
+            <button class="project-tab" type="button" data-tab="irl">
+                <span>irl</span>
+                <img src="icons/logo-reaper-svgrepo-com.svg" alt="irl logo" class="logo-tab">
+            </button>
+
+            <button class="project-tab" type="button" data-tab="hs-balls">
+                <span>hs balls ad</span>
+                <img src="icons/logo-reason-svgrepo-com.svg" alt="hs balls ad logo" class="logo-tab">
+            </button>
+
+            <button class="project-tab" type="button" data-tab="kiff-kak">
+                <span>kiff-kak</span>
+                <img src="icons/logo-tracktion-svgrepo-com.svg" alt="kiff-kak logo" class="logo-tab">
+            </button>
+
+            <button class="project-tab" type="button" data-tab="waveform">
+                <span>waveform</span>
+                <img src="icons/logo-waveform-svgrepo-com.svg" alt="waveform logo" class="logo-tab">
+            </button>
+        </aside>
+
+        <main class="main-content" id="main-panel" aria-live="polite"></main>
+    </div>
+
+    <script>
+        const projectData = {
+            emsamo: {
+                title: "EMSAMO by Njabulo Nhlanhla",
+                image: "EMSAMO OUTDOOR POSTER.webp",
+                description:
+                    "This project explores a unique style of branding for cultural brands that provide products and services that help the society fulfil their spiritual needs and desires. Emsamo does just that, it sells reed mats for Shembe Church Congregantions and African Cultural Religion believers. The whole visual identity is inspired by the brand owner's spirit animal(lion) , their admiration of Ancient Egyptian Architecture and the natural shapes and colors of clay and dry reed stems.",
+                points: [
+                    "Creative visual identity",
+                    "Versitile across different mediums",
+                    "Personal relation to design choices",
+                    "experimental design style"
+                ],
+                images: [
+                    "EMSAMO OUTDOOR POSTER.webp",
+                    "EMSAMO LETTERHEAD.webp",
+                    "EMSAMO EMAIL SIGNATURE.webp",
+                    "EMSAMO BUSINESS CARD.webp",
+                    "EMSAMO UNIFORM.webp",
+                    "EMSAMO TOTE BAG.webp"
+                ]
+            },
+            "safe-haven": {
+                title: "Safe Haven",
+                image: "Vinyl Record and CD PSD MockUp.webp",
+                description:
+                    "Safe Haven is an R&B music album by Ruth.B, and for this project i had to design the album cover art. The design shown mainly explores a post-modernism approach to design by uniquely using colors and shapes to express the melancholic and romantic sensation behind the album creation, the songs and artist's reason to create the album.",
+                points: [
+                    "Brand direction",
+                    "User trust focus",
+                    "Minimal interface design"
+                ],
+                images: [
+                    "Vinyl Record and CD PSD MockUp.webp",
+                    "ALBUM COVER ART(FRONT)-tmmekwa-226219845.webp",
+                    "ALBUM COVER ART(BLACK)-tmmekwa-226219845.webp"
+                ]
+            },
+            "fall-off": {
+                title: "Fall Off",
+                image: "aurora.webp",
+                description:
+                    "Fall Off explores motion, risk, and disruption. It uses contrast and tension to frame a bold, expressive mood for the project.",
+                points: [
+                    "Bold visual language",
+                    "Dynamic interaction",
+                    "Experimental composition"
+                ]
+            },
+            irl: {
+                title: "IRL",
+                image: "aurora.webp",
+                description:
+                    "IRL blends digital and real-world experiences, combining social energy with grounded design decisions to tell a more intimate story.",
+                points: [
+                    "Context-driven design",
+                    "Real-world narrative",
+                    "Community-centered ideas"
+                ]
+            },
+            "hs-balls": {
+                title: "HS Balls Ad",
+                image: "aurora.webp",
+                description:
+                    "This concept emphasizes punchy presentation, product-first storytelling, and a strong visual rhythm for advertising impact.",
+                points: [
+                    "Campaign-first layout",
+                    "Visual rhythm",
+                    "Persuasive messaging"
+                ]
+            },
+            "kiff-kak": {
+                title: "Kiff-Kak",
+                image: "aurora.webp",
+                description:
+                    "Kiff-Kak takes an energetic and playful approach to visual branding, creating an immersive identity rooted in motion and personality.",
+                points: [
+                    "Playful creativity",
+                    "Flexible visual system",
+                    "Brand personality"
+                ]
+            },
+            waveform: {
+                title: "Waveform",
+                image: "aurora.webp",
+                description:
+                    "Waveform is centred on sound, motion, and layered depth. The design celebrates fluidity and rhythm through a refined visual system.",
+                points: [
+                    "Audio-inspired visuals",
+                    "Layered textures",
+                    "Fluid motion"
+                ]
+            }
+        };
+
+        const mainPanel = document.getElementById("main-panel");
+        const sidebar = document.getElementById("project-sidebar");
+        const sidebarToggle = document.getElementById("sidebar-toggle");
+
+        function setSidebarCollapsed(isCollapsed) {
+            sidebar.classList.toggle("collapsed", isCollapsed);
+        }
+
+        function renderProject(key) {
+            const project = projectData[key];
+            if (!project) return;
+
+            document.querySelectorAll(".project-tab").forEach((button) => {
+                button.classList.toggle("active", button.dataset.tab === key);
+            });
+
+            const galleryMarkup = project.images ? `
+                <div class="project-gallery">
+                    ${project.images.map((img) => `
+                        <div class="project-gallery-card">
+                            <img src="${img}" alt="${project.title} image" />
+                        </div>
+                    `).join("")}
+                </div>
+            ` : "";
+
+            mainPanel.innerHTML = `
+                <h1>${project.title}</h1>
+                <img src="${project.image}" class="main-image" alt="${project.title}">
+                <p class="emsamo-text">${project.description}</p>
+                <ul class="project-list">
+                    ${project.points.map((point) => `<li>${point}</li>`).join("")}
+                </ul>
+                ${galleryMarkup}
+            `;
+        }
+
+        document.querySelectorAll(".project-tab").forEach((button) => {
+            button.addEventListener("click", () => renderProject(button.dataset.tab));
+        });
+
+        sidebarToggle.addEventListener("click", () => {
+            const isCollapsed = !sidebar.classList.contains("collapsed");
+            setSidebarCollapsed(isCollapsed);
+        });
+
+        setSidebarCollapsed(true);
+        renderProject("emsamo");
+    </script>
+
+</body>
+</html>
